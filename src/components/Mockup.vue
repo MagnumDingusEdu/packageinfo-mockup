@@ -51,7 +51,7 @@
         <v-row>
           <v-col cols="12" md="8">
             <v-text-field
-                placeholder="Search for a package"
+                placeholder="Enter a package name, MD5 hash or SWHID"
                 outlined
                 append-icon="mdi-magnify"
 
@@ -62,8 +62,7 @@
             <v-combobox
                 v-model="selectedDistros"
                 :items="availableDistros"
-                label="Select your distribution"
-                clearable
+                label="Filter by distribution"
                 outlined
             >
               <template v-slot:selection="data">
@@ -152,7 +151,7 @@
                   @page-count="pageCount = $event"
                   :sort-desc="[false, true]"
                   multi-sort
-                  class="elevation-1"
+                  class="elevation-1 row-pointer"
                   @click:row="handleTableClick"
               ></v-data-table>
 
@@ -214,6 +213,17 @@
                       </div>
 
                     </v-row>
+                    <v-row
+                        align="center"
+                        class="mx-0 mt-8"
+                    >
+                      SWHID :
+
+                      <div class="grey--text">
+                        swh:1:dir:8c50d57422d4034c103f9719c5920c9384d495ce
+                      </div>
+
+                    </v-row>
                   </v-card-text>
                 </v-col>
                 <v-spacer></v-spacer>
@@ -256,10 +266,15 @@
 
                   color="deep-orange lighten-2"
                   text
-
-
               >
-                Download Source
+                Download Package
+              </v-btn>
+              <v-btn
+
+                  color="deep-orange lighten-2"
+                  text
+              >
+                View Source
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -306,13 +321,14 @@ export default {
       'documentation',
       'github',
     ],
-    selectedDistros: null,
+    selectedDistros: 'All',
     availableDistros: [
+      'All',
       'Ubuntu',
       'Fedora',
       'Arch Linux',
       'Debian',
-      'CentOS'
+      'CentOS',
 
     ],
     headers: [
@@ -1067,6 +1083,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="css" scoped>
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
+}
 </style>
